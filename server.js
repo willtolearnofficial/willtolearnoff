@@ -11,7 +11,6 @@ const app = express();
 app.use(express.json());
 
 // UPDATED CORS: This allows your frontend to talk to this Render backend 
-// without "Blocked by CORS" errors.
 app.use(cors({
     origin: '*', 
     methods: ['GET', 'POST'],
@@ -19,15 +18,12 @@ app.use(cors({
 }));
 
 // --- MONGODB CONNECTION ---
-// Priority 1: Use Render Environment Variable (process.env.MONGO_URI)
-// Priority 2: Use the fallback string
 const mongoURI = process.env.MONGO_URI || "mongodb+srv://will_123:will12345@cluster0.bynok57.mongodb.net/WillToLearnDB?retryWrites=true&w=majority";
 
 mongoose.connect(mongoURI)
     .then(() => console.log("✅ Connected to MongoDB Atlas"))
     .catch(err => {
         console.error("❌ MongoDB Connection Error:", err);
-        // This log helps you see if the IP whitelist is the problem
     });
 
 // --- USER SCHEMA ---
@@ -39,8 +35,7 @@ const User = mongoose.model('User', userSchema);
 
 // --- ROUTES ---
 
-// 1. FORCE index1.html as the homepage
-// We put this ABOVE app.use(express.static) to make sure index.html doesn't take over.
+// 1. Root Route
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'index1.html'));
 });
@@ -69,7 +64,32 @@ app.post('/signup', async (req, res) => {
     }
 });
 
-// 3. Serve other files (home.html, LOGO.jpeg, etc.)
+// 3. Login Logic (UPDATED)
+app.post('/login', async (req, res) => {
+    try {
+        const { username, password } = req.body;
+
+        // 1. Find the user by username
+        const user = await User.findOne({ username });
+        if (!user) {
+            return res.status(404).json({ error: "User not found. Please sign up." });
+        }
+
+        // 2. Compare the provided password with the hashed password in DB
+        const isMatch = await bcrypt.compare(password, user.password);
+        
+        if (isMatch) {
+            res.status(200).json({ message: "Login successful!", username: user.username });
+        } else {
+            res.status(401).json({ error: "Incorrect password." });
+        }
+    } catch (err) {
+        console.error("Login error:", err);
+        res.status(500).json({ error: "Server error during login." });
+    }
+});
+
+// 4. Serve other static files
 app.use(express.static(__dirname));
 
 // --- START SERVER ---
