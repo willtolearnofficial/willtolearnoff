@@ -265,14 +265,14 @@
         const profileDisplay = document.getElementById('profileDisplay');
         const continueBtn = document.getElementById('continueButton');
 
-        // Replace this with your actual Render URL after deployment
+        // Your Render backend URL
         const API_URL = 'https://willtolearnoff.onrender.com'; 
 
         // Live profile character update
         usernameInput.addEventListener('input', (e) => {
             const value = e.target.value;
             if (value.length > 0) {
-                profileDisplay.innerText = value.charAt(0);
+                profileDisplay.innerText = value.charAt(0).toUpperCase();
             } else {
                 profileDisplay.innerText = '@';
             }
@@ -288,7 +288,6 @@
                 return;
             }
 
-            // Change button state to show it's working
             continueBtn.innerText = "SAVING...";
             continueBtn.disabled = true;
 
@@ -304,8 +303,11 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    // Redirect to home.html only after successful save
-                    window.location.href = 'home.html';
+                    // 1. Save username to browser memory so other pages can see it
+                    localStorage.setItem('username', username);
+
+                    // 2. REDIRECT to your GitHub Pages live site
+                    window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
                 } else {
                     alert(data.error || "Signup failed. Try a different username.");
                     continueBtn.innerText = "CONTINUE";
@@ -313,7 +315,7 @@
                 }
             } catch (error) {
                 console.error("Error:", error);
-                alert("Could not connect to the database. Make sure your Render server is running.");
+                alert("Could not connect to the database. Check if Render server is live.");
                 continueBtn.innerText = "CONTINUE";
                 continueBtn.disabled = false;
             }
