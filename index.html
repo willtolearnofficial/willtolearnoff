@@ -11,79 +11,242 @@
     <link href="https://fonts.googleapis.com/css2?family=Tilt+Prism&family=Space+Grotesk:wght@400;700&family=Snippet&family=Sofia&display=swap" rel="stylesheet">
     
     <style>
-        :root { --text-color: #ffffff; --bg-color: #000000; --border-color: #ffffff; }
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            font-family: 'Space Grotesk', sans-serif; 
-            margin: 0; 
-            min-height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 40px; 
-            box-sizing: border-box; 
+        :root {
+            --text-color: #ffffff;
+            --bg-color: #000000;
+            --border-color: #ffffff;
+            --accent-blue: #2b57ff;
         }
-        .top-welcome-header { width: 100%; max-width: 1200px; padding-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); margin-bottom: 2rem; }
-        .welcome-title { font-size: 2.5rem; font-weight: 700; margin: 0; }
-        .logo-i { font-family: 'Tilt Prism', cursive; }
-        .to-learn { font-family: 'Snippet', sans-serif; font-size: 3rem; }
-        
-        .main-wrapper { position: relative; width: 100%; max-width: 1100px; display: flex; flex-direction: column; gap: 10px; }
-        
-        .mode-switcher { display: flex; gap: 20px; margin-bottom: 20px; }
-        .mode-btn { 
-            background: transparent; 
-            border: 2px solid #fff; 
-            color: #fff; 
-            padding: 10px 30px; 
-            border-radius: 50px; 
-            cursor: pointer; 
-            font-weight: 700; 
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Space Grotesk', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* --- Top Welcome Section --- */
+        .top-welcome-header {
+            width: 100%;
+            max-width: 1200px;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        .logo-i {
+            font-family: 'Tilt Prism', cursive;
+            margin: 0 2px;
+        }
+
+        .to-learn {
+            font-family: 'Snippet', sans-serif;
+            font-size: 3rem;
+            vertical-align: middle;
+        }
+
+        /* --- Main Container --- */
+        .main-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* --- Mode Switcher Buttons --- */
+        .mode-switcher {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .mode-btn {
+            background: transparent;
+            border: 2px solid var(--border-color);
+            color: #fff;
+            padding: 10px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
             transition: 0.3s;
         }
-        .mode-btn.active { background: #fff; color: #000; }
-        
-        .main-title { font-size: clamp(60px, 10vw, 120px); font-family: 'Sofia', cursive; margin: 0; }
-        
-        .content-row { display: flex; align-items: center; justify-content: space-between; margin-top: 30px; gap: 40px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; gap: 20px; }
-        .field input { 
-            background: #fff; 
-            border: none; 
-            border-radius: 50px; 
-            height: 55px; 
-            width: 100%; 
-            padding: 0 25px; 
-            font-size: 22px; 
-            color: #000; 
-            outline: none;
+
+        .mode-btn.active {
+            background: #fff;
+            color: #000;
         }
-        
-        .profile-ring { 
-            width: 200px; 
-            height: 200px; 
-            border: 8px solid #fff; 
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-size: 100px; 
-            background: rgba(255,255,255,0.1);
+
+        /* Fun Fact Box */
+        .fun-fact-box {
+            position: absolute;
+            top: 0;
+            right: 0;
+            border: 3px solid #fff;
+            border-radius: 20px;
+            padding: 15px;
+            width: 240px;
+            font-size: 16px;
+            line-height: 1.4;
+            font-family: 'Sofia', cursive;
+            z-index: 5;
         }
-        
-        .footer-wrapper { margin-top: 50px; display: flex; justify-content: flex-end; width: 100%; }
-        .continue-btn { 
-            font-family: 'Tilt Prism', cursive; 
-            font-size: 1.75rem; 
-            background: #fff; 
-            color: #000; 
-            padding: 0.75rem 2.5rem; 
-            border-radius: 0.75rem; 
-            cursor: pointer; 
+
+        .fun-fact-title {
+            font-size: 22px;
+            text-decoration: underline;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Header Section */
+        .header-text {
+            font-size: 28px;
+            font-family: 'Sofia', cursive;
+            margin-bottom: -15px;
+        }
+
+        .main-title {
+            font-size: clamp(60px, 10vw, 120px);
+            margin: 0;
+            letter-spacing: 5px;
+            line-height: 1;
+            font-family: 'Sofia', cursive;
+        }
+
+        /* Form and Profile Row */
+        .content-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 30px;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            flex: 1;
+        }
+
+        .field {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .field label {
+            font-size: 28px;
+            min-width: 180px;
+            text-transform: uppercase;
+            font-family: 'Sofia', cursive;
+        }
+
+        .field input {
+            background: #fff;
             border: none;
+            border-radius: 50px;
+            height: 55px;
+            width: 100%;
+            padding: 0 25px;
+            font-family: 'Sofia', sans-serif;
+            font-size: 22px;
+            outline: none;
+            color: #000;
         }
-        .continue-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Profile Icon Area */
+        .profile-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .profile-ring {
+            width: 200px;
+            height: 200px;
+            border: 8px solid #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 100px;
+            font-family: 'Sofia', sans-serif;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .swirl-accent {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 50px;
+            height: 50px;
+            border-top: 6px solid #fff;
+            border-left: 6px solid #fff;
+            border-radius: 60% 0 0 0;
+            transform: rotate(-15deg);
+        }
+
+        /* Footer Section */
+        .footer-wrapper {
+            margin-top: 50px;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        .continue-btn {
+            font-family: 'Tilt Prism', cursive;
+            font-size: 1.75rem;
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: 2px solid var(--text-color);
+            padding: 0.75rem 2.5rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .continue-btn:hover {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            box-shadow: 0 0 15px var(--text-color);
+        }
+
+        .continue-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .content-row { flex-direction: column; text-align: center; }
+            .fun-fact-box { position: relative; width: 100%; margin-bottom: 20px; right: 0; }
+            .field { flex-direction: column; gap: 10px; }
+            .footer-wrapper { justify-content: center; }
+            .main-title { font-size: 70px; }
+            .welcome-title { font-size: 1.8rem; }
+            .to-learn { font-size: 2.2rem; }
+            .mode-switcher { justify-content: center; }
+        }
     </style>
 </head>
 <body>
@@ -93,19 +256,33 @@
     </header>
 
     <div class="main-wrapper">
+        <div class="fun-fact-box">
+            <span class="fun-fact-title">FUN FACT:</span>
+            WHEN YOU ENTER THE USERNAME THE PROFILE ALSO CHANGES
+        </div>
+
         <div class="mode-switcher">
             <button class="mode-btn active" id="signupMode">SIGN UP</button>
             <button class="mode-btn" id="loginMode">LOG IN</button>
         </div>
 
-        <h1 class="main-title" id="actionTitle">"CREATE PROFILE"</h1>
+        <div class="header-text" id="headerAction">COMPLETE YOUR</div>
+        <h1 class="main-title">"PROFILE"</h1>
 
         <div class="content-row">
             <div class="input-group">
-                <div class="field"><input type="text" id="usernameInput" placeholder="Username" spellcheck="false"></div>
-                <div class="field"><input type="password" id="passwordInput" placeholder="Password (min 8 chars)"></div>
+                <div class="field">
+                    <label>USERNAME</label>
+                    <input type="text" id="usernameInput" spellcheck="false" placeholder="Type here...">
+                </div>
+                <div class="field">
+                    <label>PASSWORD</label>
+                    <input type="password" id="passwordInput" placeholder="••••••••">
+                </div>
             </div>
+
             <div class="profile-container">
+                <div class="swirl-accent"></div>
                 <div class="profile-ring" id="profileDisplay">@</div>
             </div>
         </div>
@@ -116,87 +293,82 @@
     </div>
 
     <script>
-        // --- APPWRITE CONFIG ---
+        const usernameInput = document.getElementById('usernameInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const profileDisplay = document.getElementById('profileDisplay');
+        const continueBtn = document.getElementById('continueButton');
+        const signupModeBtn = document.getElementById('signupMode');
+        const loginModeBtn = document.getElementById('loginMode');
+        const headerAction = document.getElementById('headerAction');
+
+        // --- 2. APPWRITE INITIALIZATION ---
         const { Client, Account, ID } = Appwrite;
         const client = new Client()
-            .setEndpoint('https://cloud.appwrite.io/v1')
+            .setEndpoint('https://cloud.appwrite.io/v1') 
             .setProject('69673baf001051163ba7'); 
 
         const account = new Account(client);
 
-        // --- CHECK IF ALREADY LOGGED IN ---
-        async function checkExistingSession() {
-            try {
-                await account.get();
-                window.location.href = 'home.html'; // Redirect if session exists
-            } catch (err) {
-                console.log("No active session found.");
-            }
-        }
-        checkExistingSession();
-
-        // --- UI LOGIC ---
         let currentMode = 'signup';
-        const signupBtn = document.getElementById('signupMode');
-        const loginBtn = document.getElementById('loginMode');
-        const actionTitle = document.getElementById('actionTitle');
-        const continueBtn = document.getElementById('continueButton');
-        const usernameInput = document.getElementById('usernameInput');
-        const passwordInput = document.getElementById('passwordInput');
-        const profileDisplay = document.getElementById('profileDisplay');
 
-        signupBtn.onclick = () => { 
-            currentMode = 'signup'; 
-            signupBtn.classList.add('active'); 
-            loginBtn.classList.remove('active'); 
-            actionTitle.innerText = '"CREATE PROFILE"';
-        };
-        
-        loginBtn.onclick = () => { 
-            currentMode = 'login'; 
-            loginBtn.classList.add('active'); 
-            signupBtn.classList.remove('active'); 
-            actionTitle.innerText = '"ACCESS PROFILE"';
-        };
+        // Toggle Logic
+        signupModeBtn.addEventListener('click', () => {
+            currentMode = 'signup';
+            signupModeBtn.classList.add('active');
+            loginModeBtn.classList.remove('active');
+            headerAction.innerText = "COMPLETE YOUR";
+            continueBtn.innerText = "CONTINUE";
+        });
 
-        usernameInput.oninput = (e) => {
-            profileDisplay.innerText = e.target.value.trim().charAt(0).toUpperCase() || '@';
-        };
+        loginModeBtn.addEventListener('click', () => {
+            currentMode = 'login';
+            loginModeBtn.classList.add('active');
+            signupModeBtn.classList.remove('active');
+            headerAction.innerText = "ACCESS YOUR";
+            continueBtn.innerText = "LOG IN";
+        });
 
-        // --- AUTH LOGIC ---
+        // Live profile update
+        usernameInput.addEventListener('input', (e) => {
+            const value = e.target.value.trim();
+            profileDisplay.innerText = value ? value.charAt(0).toUpperCase() : '@';
+        });
+
+        // --- 3. APPWRITE AUTHENTICATION LOGIC ---
         continueBtn.addEventListener('click', async () => {
             const username = usernameInput.value.trim();
             const password = passwordInput.value.trim();
-            const email = `${username}@willtolearn.com`; 
+            // Appwrite requires an email format. We'll use username@willtolearn.com
+            const email = `${username}@willtolearn.com`;
 
             if (!username || password.length < 8) {
                 alert("Please enter a username and a password (min 8 characters).");
                 return;
             }
 
-            continueBtn.innerText = "PROCESSING...";
+            continueBtn.innerText = currentMode === 'signup' ? "CREATING..." : "VERIFYING...";
             continueBtn.disabled = true;
 
             try {
                 if (currentMode === 'signup') {
-                    // 1. Create User
+                    // Create Account (Store login details in Appwrite)
                     await account.create(ID.unique(), email, password, username);
-                    console.log("Signup success");
+                    console.log("Account created successfully!");
                 }
 
-                // 2. Login (Create Session)
+                // Create Session (Login)
                 await account.createEmailPasswordSession(email, password);
                 
-                // 3. Store username for UI greeting
+                // Store username for your Home page
                 localStorage.setItem('username', username);
 
-                // 4. Redirect
-                window.location.href = 'home.html';
+                // REDIRECT: Redirecting to your specified URL
+                window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
 
             } catch (error) {
-                console.error(error);
-                alert(error.message);
-                continueBtn.innerText = "CONTINUE";
+                console.error("Appwrite Error:", error);
+                alert(error.message); // This will show the exact error from Appwrite
+                continueBtn.innerText = currentMode === 'signup' ? "CONTINUE" : "LOG IN";
                 continueBtn.disabled = false;
             }
         });
