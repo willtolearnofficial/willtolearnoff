@@ -334,44 +334,44 @@
             profileDisplay.innerText = value ? value.charAt(0).toUpperCase() : '@';
         });
 
-        // --- 3. APPWRITE AUTHENTICATION LOGIC ---
-        continueBtn.addEventListener('click', async () => {
-            const username = usernameInput.value.trim();
-            const password = passwordInput.value.trim();
-            // Appwrite requires an email format. We'll use username@willtolearn.com
-            const email = `${username}@willtolearn.com`;
+       // --- APPWRITE AUTHENTICATION LOGIC ---
+continueBtn.addEventListener('click', async () => {
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value.trim();
+    const email = `${username}@willtolearn.com`;
 
-            if (!username || password.length < 8) {
-                alert("Please enter a username and a password (min 8 characters).");
-                return;
-            }
+    if (!username || password.length < 8) {
+        alert("Please enter a username and a password (min 8 characters).");
+        return;
+    }
 
-            continueBtn.innerText = currentMode === 'signup' ? "CREATING..." : "VERIFYING...";
-            continueBtn.disabled = true;
+    continueBtn.innerText = currentMode === 'signup' ? "CREATING..." : "VERIFYING...";
+    continueBtn.disabled = true;
 
-            try {
-                if (currentMode === 'signup') {
-                    // Create Account (Store login details in Appwrite)
-                    await account.create(ID.unique(), email, password, username);
-                    console.log("Account created successfully!");
-                }
+    try {
+        if (currentMode === 'signup') {
+            await account.create(ID.unique(), email, password, username);
+        }
 
-                // Create Session (Login)
-                await account.createEmailPasswordSession(email, password);
-                
-                // Store username for your Home page
-                localStorage.setItem('username', username);
+        // Try the most compatible login function
+        try {
+            await account.createEmailPasswordSession(email, password);
+        } catch (e) {
+            // Fallback for older SDK versions
+            await account.createEmailSession(email, password);
+        }
+        
+        localStorage.setItem('username', username);
+        window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
 
-                // REDIRECT: Redirecting to your specified URL
-                window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
-
-            } catch (error) {
-                console.error("Appwrite Error:", error);
-                alert(error.message); // This will show the exact error from Appwrite
-                continueBtn.innerText = currentMode === 'signup' ? "CONTINUE" : "LOG IN";
-                continueBtn.disabled = false;
-            }
-        });
+    } catch (error) {
+        console.error("Appwrite Error:", error);
+        alert(error.message);
+        continueBtn.innerText = currentMode === 'signup' ? "CONTINUE" : "LOG IN";
+        continueBtn.disabled = false;
+    }
+});
     </script>
 </body>
 </html>
+
