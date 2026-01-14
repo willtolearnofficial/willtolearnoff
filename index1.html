@@ -179,8 +179,8 @@
     <script>
         const { Client, Account, ID } = Appwrite;
         const client = new Client()
-            .setEndpoint('https://fra.cloud.appwrite.io/v1') // Verified from screenshot
-            .setProject('69679293001b8cd4ab6e');             // Verified from screenshot
+            .setEndpoint('https://fra.cloud.appwrite.io/v1') 
+            .setProject('69679293001b8cd4ab6e');
 
         const account = new Account(client);
 
@@ -196,6 +196,19 @@
         const headerAction = document.getElementById('headerAction');
 
         let currentMode = 'signup';
+
+        // 1. AUTO-REDIRECT IF ALREADY LOGGED IN
+        window.addEventListener('load', async () => {
+            try {
+                const user = await account.get();
+                if (user) {
+                    console.log("Active session found for:", user.name);
+                    window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
+                }
+            } catch (error) {
+                console.log("No active session. Ready for login/signup.");
+            }
+        });
 
         // --- TOGGLE LOGIC ---
         signupModeBtn.addEventListener('click', () => {
@@ -239,13 +252,10 @@
 
             try {
                 if (currentMode === 'signup') {
-                    // Create Account
                     await account.create(ID.unique(), emailVal, passwordVal, userVal);
-                    // Login Session - SDK v13.0.1 uses createEmailSession
                     await account.createEmailSession(emailVal, passwordVal);
                     localStorage.setItem('username', userVal);
                 } else {
-                    // Login Mode - Email is typed into 'username' box
                     await account.createEmailSession(userVal, passwordVal);
                     const user = await account.get();
                     localStorage.setItem('username', user.name);
@@ -254,6 +264,13 @@
                 window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
 
             } catch (error) {
+                // 2. HANDLE "SESSION ALREADY ACTIVE" ERROR
+                if (error.message.includes("active")) {
+                    console.log("Session already active. Redirecting...");
+                    window.location.href = 'https://willtolearnofficial.github.io/WILL.TOLEARN/home.html';
+                    return;
+                }
+
                 console.error(error);
                 alert("Error: " + error.message);
                 continueBtn.disabled = false;
